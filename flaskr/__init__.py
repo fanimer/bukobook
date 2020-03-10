@@ -25,7 +25,3 @@ def create_app(test_config=None):
         return '发布页'
 
     return app
-
-if __name__ == '__main__':
-    app = create_app()
-    print(app.instance_path)
