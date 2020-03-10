@@ -3,6 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name='flaskr',  #: 包名称
     version='alpha',
+    author='mixiao',
     long_descripyion=__doc__,  #: 项目详细描述
     packages=find_packages(),
     include_package_data=True,
