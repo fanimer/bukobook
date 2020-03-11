@@ -25,7 +25,10 @@ def create_app(test_config=None):
     #: 测试用发布页
     @app.route('/index')
     def index():
-        return render_template('index.html')
+        return render_template('blog/index.html')
+
+    @app.route('/')
+    def home():
+        return "hello, world"
 
     return app
-
