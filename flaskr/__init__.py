@@ -1,7 +1,7 @@
 #: AppFactor
 
 import os
-from flask import Flask
+from flask import *
 
 def create_app(test_config=None):
     #: create and configure the app
@@ -25,8 +25,7 @@ def create_app(test_config=None):
     #: 测试用发布页
     @app.route('/index')
     def index():
-        return '发布页'
+        return render_template('index.html')
 
     return app
-
 
