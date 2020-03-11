@@ -1,7 +1,8 @@
 from flask import *
+from flask.cli import with_appcontext
 import pymysql
-import configparser
-from flaskr import app
+import click
+import
 
 
 def get_db():
@@ -20,12 +21,18 @@ def close_connection(exception):
         db.close()
 
 
-def init_db(app):
-    with app.app_context():
-        db = get_db(args)
-        with app.open_resource('schema.sql', mode='r') as f:
-            db.cursor().executescript(f.read)
-        db.commmit()
+def init_db():
+    db = get_db()
+    cur = db.cursor()
+    for _ in
+        cur.execute()
+
+
+@click.command('init-db')
+@with_appcontext
+def init_db_command():
+    init_db()
+    click.echo('Initialized the database')
 
 
 def query_db(query, args=(), one=False):

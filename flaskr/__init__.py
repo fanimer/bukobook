@@ -3,6 +3,7 @@
 import os
 from flask import *
 import configparser
+from . import db
 
 def create_app(test_config=None):
     #: create and configure the app
@@ -31,5 +32,12 @@ def create_app(test_config=None):
     @app.route('/')
     def home():
         return "hello, world"
+
+    from . import db
+    def init_app(app):
+        app.teardown_appcontext(db.close_connection)
+        app.cli.add_command(db.init_db_command)
+
+    init_app(app)
 
     return app
