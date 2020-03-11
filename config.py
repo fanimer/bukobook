@@ -14,5 +14,10 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'sql'}
 
 #: MySql配置
 
+#:
+DOWNLOAD_FOLDER = '/tmp'
+HOME_PATH = '/'
 
-
+#:
+HOST = '0.0.0.0'
+PORT = 5000
