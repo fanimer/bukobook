@@ -1,3 +1,5 @@
+use account
+
 DROP TABLE IF EXISTS post;
 DROP TABLE IF EXISTS user;
 
