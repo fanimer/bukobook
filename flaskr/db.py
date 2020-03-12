@@ -2,8 +2,7 @@ from flask import *
 from flask.cli import with_appcontext
 import pymysql
 import click
-import
-
+from . import sql
 
 def get_db():
     if 'db' not in g:
@@ -22,10 +21,8 @@ def close_connection(exception):
 
 
 def init_db():
-    db = get_db()
-    cur = db.cursor()
-    for _ in
-        cur.execute()
+    import subprocess
+    subprocess.call("mysql -u root < schema.sql")
 
 
 @click.command('init-db')
