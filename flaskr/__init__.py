@@ -23,6 +23,8 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    Strength_Configuration(app)
+
     #: 测试用发布页
     @app.route('/index')
     def index():
@@ -40,3 +42,9 @@ def create_app(test_config=None):
     init_app(app)
 
     return app
+
+
+def Strength_Configuration(app):
+    config = configparser.ConfigParser()
+    app.from_mapping(config.read(app.instance_path + 'application.cfg'))
+    print(app.config["Host"])

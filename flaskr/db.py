@@ -23,8 +23,7 @@ def close_connection(exception):
 def init_db():
     import subprocess
     info = current_app.config['DATABASE']
-    subprocess.call('mysql -u {} -p{} {} -e "source schema.sql"'.
-                    format(info['USERNAME'], info['PASSWORD'], info['DATABASE']))
+    subprocess.call(r'mysql -u root -p123456 account -e "source schema.sql"')
 
 
 @click.command('init-db')
