@@ -14,5 +14,5 @@ CREATE TABLE post (
     title text NOT NULL,
     body text NOT NULL,
     FOREIGN KEY (authod_id) REFERENCES user (id)
-);
+    );
 

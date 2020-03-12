@@ -12,13 +12,8 @@ DEBUG = True
 UPLOAD_FOLDER = '/tmp/uploads'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'sql'}
 
-#: MySql配置
-DATABASE = {
-    'HOST': 'localhost',
-    'USERNAME': 'root',
-    'PASSWORD': '123456',
-    'DATABASE': 'account'
-}
+#: 默认数据库
+DATABASE = 'MySql'
 #:
 DOWNLOAD_FOLDER = '/tmp'
 HOME_PATH = '/'

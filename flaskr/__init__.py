@@ -46,5 +46,5 @@ def create_app(test_config=None):
 
 def Strength_Configuration(app):
     config = configparser.ConfigParser()
-    app.from_mapping(config.read(app.instance_path + 'application.cfg'))
-    print(app.config["Host"])
+    config.read(app.instance_path + '/application.cfg')
+    app.config.update(dict(config[app.config['DATABASE']]))

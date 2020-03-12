@@ -6,9 +6,11 @@ import click
 
 def get_db():
     if 'db' not in g:
-        info = current_app.config['DATABASE']
         g.db = pymysql.connect(
-            info['HOST'], info['USERNAME'], info['PASSWORD'], info['DATABASE']
+            current_app.config['host'],
+            current_app.config['user'],
+            current_app.config['pwd'],
+            current_app.config['db']
         )
         g.db.row_factory = pymysql.cursors.DictCursor
     return g.db
@@ -21,9 +23,17 @@ def close_connection(exception):
 
 
 def init_db():
-    import subprocess
-    info = current_app.config['DATABASE']
-    subprocess.call(r'mysql -u root -p123456 account -e "source schema.sql"')
+    db = get_db()
+    cur = db.cursor()
+    with current_app.open_resource('schema.sql') as f:
+        string = f.read().decode('utf8')
+    query = string.split(';')[:-1]
+    query = [_.replace('\r', '') for _ in query]
+    query = [_.replace('\n', '') for _ in query]
+    for _ in query:
+        cur.execute(_ + ';')
+    db.commit()
+    cur.close()
 
 
 @click.command('init-db')
