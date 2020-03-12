@@ -2,7 +2,6 @@ from flask import *
 from flask.cli import with_appcontext
 import pymysql
 import click
-from . import sql
 
 
 def get_db():
