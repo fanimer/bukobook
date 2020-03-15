@@ -4,22 +4,16 @@
 当前项目架构
 ```
 root 
-  |---- flaskr/
-  |         |-- __init__.py
-  |         |-- configs/
-  |         |-- static/
-  |         |-- templates/
-  |------ test/
-  |
-  |------ venv/
-  |
-  |-- .gitignore
-  |
-  |-- config.py
-  |
-  |-- MANIFEST.in
-  |
-  |-- setup.cfg
-  |
-  |-- setup.py
+  |---------- flaskr/
+  |-- .gitignore |-- __init__.py
+  |-- manage.py  |-- db.py
+  |-- config.py  |-- schema.sql
+  |-- setup.py   |----------------------------------- configs/
+  |-- setup.cfg  |---------------------------- static/  |--__init__.py
+  |-- MANIFEST.in|----------------- templates/   |      |--DefalutConfig.py
+  |-- venv/      |-- view/            |-- auth/  |-- style.css  
+  |-- test/           |-- __init__.py |-- blog/                    
+  |-- instance/       |-- auth.py     |-- space/
+                      |-- blog.py     |-- base.html
+                      |-- space.py
 ```
