@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS commend;
+DROP TABLE IF EXISTS comment;
 DROP TABLE IF EXISTS post;
 DROP TABLE IF EXISTS user;
 
@@ -17,16 +17,17 @@ CREATE TABLE post (
     FOREIGN KEY (author_id) REFERENCES user(id)
     );
 
-CREATE TABLE commend (
+CREATE TABLE comment (
     id INTEGER PRIMARY KEY auto_increment,
     reviewer_id INTEGER NOT NULL,
     post_id INTEGER NOT NULL,
-    reply_to INTEGER NOT NULL,
-    by_reply VARCHAR(18) NOT NULL,
+    reply_to INTEGER,
+    by_reply VARCHAR(18),
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     body TEXT NOT NULL,
-    FOREIGN KEY (reviewer_id, by_reply) REFERENCES user(id, username),
+    FOREIGN KEY (reviewer_id) REFERENCES user(id),
     FOREIGN KEY (post_id) REFERENCES post(id),
-    FOREIGN KEY (reply_to) REFERENCES commend(id),
+    FOREIGN KEY (by_reply) REFERENCES user(username),
+    FOREIGN KEY (reply_to) REFERENCES comment(id)
     );
 

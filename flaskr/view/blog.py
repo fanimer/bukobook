@@ -94,11 +94,12 @@ def delete(id):
 @bp.route('/article/<int:id>')
 def article(id):
     post = get_post(id, check_author=False)
-
-    return render_template("blog/article.html", post=post)
+    comments = get_comment(id)
+    return render_template("blog/article.html", post=post, comments=comments)
 
 
 @bp.route('/<int:id>/comment', methods=('POST',))
+@bp.route('/<int:id>/<int:reply_to>/comment')
 @login_required
 def comment(id):
     body = request.form['body']
@@ -112,7 +113,9 @@ def comment(id):
 
 def get_comment(id):
     comments = query_db(
-        'SELECT c.id, username, body, reply_to'
-        ' FROM comment c JOIN user u ON c.reviewer = u.id'
-        ' WHERE c.post_id = %s'
-    )
+        'SELECT username, body, created'
+        ' FROM comment c JOIN user u ON c.reviewer_id = u.id'
+        ' WHERE c.post_id = %s ORDER BY created DESC',
+        (id))
+
+    return comments

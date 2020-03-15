@@ -16,9 +16,13 @@
                 </div>
             </header>
             <nobr><span class="body">{{ post['body'][0:49] }}</span>
-                {% if post['body'][50] %}
-                    <a class="active" href="{{ url_for('blog.article', id=post['id']) }}">...</a>
-                {% endif %}
+                <a class="active" href="{{ url_for('blog.article', id=post['id']) }}">
+                    {% if post['body'][50] %}
+                        ...
+                    {% else %}
+                        <div>查看全文</div>
+                    {% endif %}
+                </a>
             </nobr>
         </article>
         {% if not loop.last %}
