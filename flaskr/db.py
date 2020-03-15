@@ -1,7 +1,7 @@
-from flask import *
-from flask.cli import with_appcontext
-import pymysql
 import click
+import pymysql
+from flask import (g, current_app)
+from flask.cli import with_appcontext
 
 
 def get_db():
@@ -10,9 +10,9 @@ def get_db():
             current_app.config['host'],
             current_app.config['user'],
             current_app.config['pwd'],
-            current_app.config['db']
+            current_app.config['db'],
+            cursorclass=pymysql.cursors.DictCursor
         )
-        g.db.row_factory = pymysql.cursors.DictCursor
     return g.db
 
 
@@ -29,9 +29,9 @@ def init_db():
         string = f.read().decode('utf8')
     query = string.split(';')[:-1]
     query = [_.replace('\r', '') for _ in query]
-    query = [_.replace('\n', '') for _ in query]
+    query = [_.replace('\n', '') + ';' for _ in query]
     for _ in query:
-        cur.execute(_ + ';')
+        cur.execute(_)
     db.commit()
     cur.close()
 
@@ -44,19 +44,23 @@ def init_db_command():
 
 
 def query_db(query, args=(), one=False):
-    cur = get_db().execute(query, args)
+    cur = get_db().cursor()
+    cur.execute(query, args)
     rv = cur.fetchall()
     cur.close()
-    return (rv[0] if rv else None) if one else rv
+    return rv
 
 
-def insert_db(insert_sql, args=()):
+def insert_db(insert_sql: str, args=()):
     db = get_db()
     cur = db.cursor()
+    cur.execute(insert_sql, args)
     try:
-        cur.execute(insert_sql, args)
         db.commit()
+        cur.close()
         return True
     except:
         db.rollback()
+        cur.close()
         return False
+

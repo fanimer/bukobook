@@ -1,7 +1,8 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+
 {% block header %}
-    <h1>{% block title %}Posts{% endblock %}</h1>
-    {% if g.user %}
+    <h1>{% block title %} Personal{% endblock %}</h1>
+    {% if g.user['username']== username %}
         <a class="action" href="{{ url_for('blog.create') }}">New</a>
     {% endif %}
 {% endblock %}
@@ -12,7 +13,7 @@
             <header>
                 <div>
                     <h1>{{ post['title'] }}</h1>
-                    <div class="about">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</div>
+                    <div class="about">on {{ post['created'].strftime('%Y-%m-%d') }}</div>
                 </div>
             </header>
             <nobr><span class="body">{{ post['body'][0:49] }}</span>
@@ -25,5 +26,4 @@
             <hr>
         {% endif %}
     {% endfor %}
-    <hr>
 {% endblock %}

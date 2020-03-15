@@ -1,8 +1,10 @@
 #: AppFactor
 
-import os
-from flask import *
 import configparser
+import os
+
+from flask import (Flask)
+
 
 def create_app(test_config=None):
     #: create and configure the app
@@ -25,21 +27,22 @@ def create_app(test_config=None):
 
     Strength_Configuration(app)
 
-    #: 测试用发布页
-    @app.route('/index')
-    def index():
-        return render_template('blog/index.html')
-
-    @app.route('/')
-    def home():
-        return "hello, world"
-
     from . import db
     def init_app(app):
         app.teardown_appcontext(db.close_connection)
         app.cli.add_command(db.init_db_command)
 
     init_app(app)
+
+    from flaskr.view import auth
+    app.register_blueprint(auth.bp)
+
+    from flaskr.view import space
+    app.register_blueprint(space.bp)
+
+    from flaskr.view import blog
+    app.register_blueprint(blog.bp)
+    app.add_url_rule('/', endpoint='index')
 
     return app
 
